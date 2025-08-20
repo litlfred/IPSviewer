@@ -11,6 +11,7 @@
   import type { Bundle, Composition, Patient } from 'fhir/r4';
   
   import IPSContent from '$lib/components/viewer/IPSContent.svelte';
+  import EnhancedIPSContent from '$lib/integration/enhanced/EnhancedIPSContent.svelte';
   import Demo from '$lib/components/viewer/Demo.svelte';
   
   import { SHOW_VIEWER_DEMO } from "$lib/config";
@@ -183,7 +184,7 @@
     {#each shlContents as contents, index}
       <TabPane class={`ips${index}`} tabId={`ips${index}`} active={index === 0} style="padding-top:10px">
         <span class="smart-tab" slot="tab">{getTabLabel(contents)}</span>
-        <IPSContent bundle={contents} mode={$displayMode} />
+        <EnhancedIPSContent bundle={contents} mode={$displayMode} />
       </TabPane>
     {/each}
     {#if SHOW_VIEWER_DEMO}
@@ -195,7 +196,7 @@
   </TabContent>
 {:else}
   <!-- Single tab view -->
-  <IPSContent bundle={shlContents[0]} mode={$displayMode} />
+  <EnhancedIPSContent bundle={shlContents[0]} mode={$displayMode} />
 {/if}
 
 <style lang="css">

@@ -15,6 +15,7 @@
   import { download } from '$lib/utils/util.js';
   import type { IpsRenderingResult, EnhancedSectionContent } from './types';
   import ComponentRenderer from './ComponentRenderer.svelte';
+  import { createEnhancedIpsViewer } from '$lib/kotlin-js/kotlin-integration';
 
   export let bundle: Bundle;
   export let mode: string = "structured";
@@ -49,25 +50,28 @@
     }
   }
 
-  // Simulate enhanced library call - this would be replaced with actual Kotlin JS interop
+  // Use the actual Kotlin library for enhanced processing
   async function processWithEnhancedLibrary(bundle: Bundle, mode: string): Promise<IpsRenderingResult> {
-    // TODO: Replace with actual Kotlin library call
-    // const ipsViewer = createEnhancedIpsViewer();
-    // const resultJson = ipsViewer.processIpsBundleWithRendering(JSON.stringify(bundle), mode, "web");
-    // return JSON.parse(resultJson);
-    
-    // For now, return mock enhanced structure
-    return {
-      sections: {
-        "Patient": {
-          title: "Patient",
-          hasData: true,
-          useTextMode: false,
-          resources: []
-        }
-      },
-      warnings: ["Enhanced processing not yet integrated - showing placeholder"]
-    };
+    try {
+      const ipsViewer = await createEnhancedIpsViewer();
+      const resultJson = ipsViewer.processIpsBundleWithRendering(JSON.stringify(bundle), mode, "web");
+      return JSON.parse(resultJson);
+    } catch (error) {
+      console.error('Failed to process with Kotlin library:', error);
+      // Fallback to mock structure
+      return {
+        sections: {
+          "Patient": {
+            title: "Patient",
+            hasData: true,
+            useTextMode: false,
+            resources: []
+          }
+        },
+        errors: [`Failed to process with Kotlin library: ${error}`],
+        warnings: ["Using fallback processing due to library error"]
+      };
+    }
   }
 
   // JSON viewer state
