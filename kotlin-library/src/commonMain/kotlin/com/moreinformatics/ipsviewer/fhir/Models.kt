@@ -124,7 +124,16 @@ data class AllergyIntolerance(
     val type: String? = null,
     val criticality: String? = null,
     val code: CodeableConcept? = null,
-    val onsetDateTime: String? = null
+    val patient: Reference? = null,
+    val reaction: List<AllergyIntoleranceReaction>? = null,
+    val note: List<Annotation>? = null
+)
+
+@Serializable
+data class AllergyIntoleranceReaction(
+    val manifestation: List<CodeableConcept>? = null,
+    val severity: String? = null,
+    val note: List<Annotation>? = null
 )
 
 @Serializable
@@ -134,7 +143,16 @@ data class Condition(
     val clinicalStatus: CodeableConcept? = null,
     val verificationStatus: CodeableConcept? = null,
     val code: CodeableConcept? = null,
-    val onsetDateTime: String? = null
+    val subject: Reference? = null,
+    val onsetDateTime: String? = null,
+    val severity: CodeableConcept? = null
+)
+
+@Serializable
+data class Annotation(
+    val text: String? = null,
+    val authorString: String? = null,
+    val time: String? = null
 )
 
 @Serializable
