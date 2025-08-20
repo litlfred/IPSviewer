@@ -44,3 +44,10 @@ vite.config.ts.timestamp-*
 
 # VS Code session
 /.vscode
+
+# Kotlin library build artifacts
+kotlin-library/build/
+kotlin-library/.gradle/
+kotlin-library/gradle-*
+*.gradle.kts.bak
+*.lock
