@@ -17,6 +17,7 @@
   import { onMount } from "svelte";
   import type { Bundle } from "fhir/r4";
   import IpsContent from "$lib/components/viewer/IPSContent.svelte";
+  import EnhancedIPSContent from "$lib/integration/enhanced/EnhancedIPSContent.svelte";
 
   export let bundle: Bundle | undefined;
   export let mode: string;
@@ -234,7 +235,7 @@
 
 {#if bundle}
 <Row>
-  <IpsContent {bundle} {mode} />
+  <EnhancedIPSContent {bundle} {mode} />
 </Row>
 {/if}
 
